@@ -2,6 +2,7 @@
 import { authService } from "./firebase.js";
 import { getpostList } from "./pageJs/new_main.js";
 import { seeMyPost } from "./pageJs/new_mypage.js";
+import { seeMyComment } from "./pageJs/comment.js";
 /* 채하 끝 */
 
 const routes = {
@@ -127,6 +128,7 @@ export const handleLocation = async () => {
       },
     });
   };
+  
   /* 채하시작 */
   // 🟡🟡🟡🟡🟡🟡🟡🟡 이 부분 54번 라인에 채하님이 합치심
   // if (path === "mypage" || path === "main") {
@@ -134,9 +136,30 @@ export const handleLocation = async () => {
   // }
 
   if (path === "new_mypage" || path === "mypage"){
-    seeMyPost();
-  }
-  /* 채하끝 */
+     // gg시작
+     const yheader = routes["header"] || routes[404];
+     const ysidebar = routes["sidebar"] || routes[404];
+     const yfooter = routes["footer"] || routes[404];
+ 
+     const headerhtml = await fetch(yheader).then((data) => data.text());
+     const sidebarhtml = await fetch(ysidebar).then((data) => data.text());
+     const footerhtml = await fetch(yfooter).then((data) => data.text());
+ 
+     const pagehtml = await fetch(route).then((data) => data.text());
+ 
+     document.getElementById("index_header").innerHTML = headerhtml;
+     document.getElementById("index_sidebar").innerHTML = sidebarhtml;
+     document.getElementById("index_page").innerHTML = pagehtml;
+     document.getElementById("index_footer").innerHTML = footerhtml;
+   // gg끝 
+     seeMyPost();
+   }
+   /* 채하끝 */
+   // gg채하시작
+   if (path === "comment"){
+     seeMyComment();
+   }
+   // gg채하끝
 };
 
 /* 채하시작 */
